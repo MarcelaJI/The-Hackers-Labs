@@ -68,6 +68,12 @@ http://192.168.1.82/fruits.php?file=/etc/passwd
 
 Este hallazgo confirma la existencia de una vulnerabilidad LFI, lo que representa una potencial vía de escalada o extracción de información sensible del sistema.
 
+![máquina](./images/8.png)
+
+También encontramos algo interesante: entre los resultados del archivo /etc/passwd aparece un usuario llamado bananaman. Este descubrimiento es relevante, ya que se trata de un usuario válido del sistema y podría representar una vía potencial para realizar un ataque de fuerza bruta por SSH utilizando herramientas como Hydra.
+
+
+
 
 
 
