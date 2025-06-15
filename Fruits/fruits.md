@@ -38,19 +38,19 @@ http://192.168.1.2:80
 
 ---
 
-## 4. Búsqueda de vulnerabilidades:
+## 4. Análisis web y descubrimiento de vulnerabilidades
 
 ![máquina](./images/4.png)
 
-De primeras nos encontramos esta página, he inspeccionado la página y no hay nada interesante que nos pueda dar alguna pista...
+Inicialmente la página no muestra contenido relevante. Tras inspeccionar el código HTML, no encontramos pistas útiles.
 
 ---
 
-Ahora utilizaré **gobuster** para ver si nos ayuda a identificar archivos o directorios ocultos:
+Uso de Gobuster para encontrar rutas ocultas
 
 ![máquina](./images/5.png)
 
-Y nos ha detectado **fruits.php** vamos a escribirlo en el navegador para ver si nos da una pista:
+Gobuster nos revela la existencia de un archivo llamado fruits.php. Lo abrimos en el navegador:
 
 ![máquina](./images/6.png)
 
@@ -72,6 +72,39 @@ Este hallazgo confirma la existencia de una vulnerabilidad LFI, lo que represent
 
 También encontramos algo interesante: entre los resultados del archivo /etc/passwd aparece un usuario llamado bananaman. Este descubrimiento es relevante, ya que se trata de un usuario válido del sistema y podría representar una vía potencial para realizar un ataque de fuerza bruta por SSH utilizando herramientas como Hydra.
 
+## 5. Explotación de vulnerabilidades:
+
+![máquina](./images/9.png)
+
+**Hydra** nos ha detectado la contraseña del usuario **bananaman**, ahora lo utilizaremos como vía para entrar por SSH.
+
+Gracias a Hydra, logramos descubrir la contraseña del usuario bananaman mediante un ataque de fuerza bruta. Utilizaremos estas credenciales para acceder al sistema a través del servicio SSH, lo que nos permitirá obtener una sesión interactiva como dicho usuario.
+
+Una vez dentro del sistema como el usuario bananaman, el siguiente paso es verificar qué comandos puede ejecutar con privilegios elevados. Para ello, utilizamos el siguiente comando:
+
+![máquina](./images/10.png)
+
+## 6. Escalada de privilegios
+
+Tras verificar los permisos de sudo disponibles para el usuario bananaman, observamos que tiene permiso para ejecutar el binario find como root sin necesidad de contraseña. Este tipo de configuración permite aprovechar una técnica conocida para escalar privilegios.
+
+Ejecutamos el siguiente comando para obtener una shell con permisos de root:
+
+```bash
+sudo find . -exec /bin/bash \;
+```
+
+Este comando hace uso del parámetro -exec de find para invocar una shell (/bin/bash) como superusuario. Al ejecutarse correctamente, obtenemos una shell interactiva con privilegios de root.
+
+![máquina](./images/11.png)
+
+Con esto, se completa exitosamente la resolución de la máquina.
+
+---
+
+📅 Resuelta el 15/06/25
+
+👩Por Marcela Jiménez (aka Mar) 🐉
 
 
 
