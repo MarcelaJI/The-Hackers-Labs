@@ -16,4 +16,4 @@ Cada máquina estará organizada en su propia carpeta con todos los pasos, coman
 
 ## 📦 Máquinas resueltas
 
-- Fruits
+- [Fruits](./Fruits)
