@@ -4,7 +4,7 @@
 
 ---
 
-## 1.  Encendemos la máquina vulnerable
+## 1.  Encendido de la máquina vulnerable
 
 ![máquina](./images/1.png)
 
